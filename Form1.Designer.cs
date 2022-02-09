@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FFXIVQuestTrackerForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
             this.dataGridViewMainQuests = new System.Windows.Forms.DataGridView();
@@ -58,21 +59,24 @@
             this.labelPrefTheme = new System.Windows.Forms.Label();
             this.comboBoxPrefExpac = new System.Windows.Forms.ComboBox();
             this.labelPrefExpac = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.tabControl.SuspendLayout();
             this.tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMainQuests)).BeginInit();
             this.tabPreferences.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabMain);
             this.tabControl.Controls.Add(this.tabPreferences);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tabControl.Location = new System.Drawing.Point(0, 28);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(884, 561);
+            this.tabControl.Size = new System.Drawing.Size(884, 533);
             this.tabControl.TabIndex = 0;
             // 
             // tabMain
@@ -85,7 +89,7 @@
             this.tabMain.Location = new System.Drawing.Point(4, 24);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(876, 533);
+            this.tabMain.Size = new System.Drawing.Size(876, 505);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -118,7 +122,7 @@
             this.dataGridViewMainQuests.RowHeadersVisible = false;
             this.dataGridViewMainQuests.RowTemplate.Height = 25;
             this.dataGridViewMainQuests.ShowCellToolTips = false;
-            this.dataGridViewMainQuests.Size = new System.Drawing.Size(688, 527);
+            this.dataGridViewMainQuests.Size = new System.Drawing.Size(688, 621);
             this.dataGridViewMainQuests.TabIndex = 4;
             this.dataGridViewMainQuests.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMainQuests_CellContentClick);
             // 
@@ -236,7 +240,7 @@
             this.tabPreferences.Location = new System.Drawing.Point(4, 24);
             this.tabPreferences.Name = "tabPreferences";
             this.tabPreferences.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPreferences.Size = new System.Drawing.Size(876, 533);
+            this.tabPreferences.Size = new System.Drawing.Size(876, 505);
             this.tabPreferences.TabIndex = 1;
             this.tabPreferences.Text = "Preferences";
             this.tabPreferences.UseVisualStyleBackColor = true;
@@ -380,12 +384,38 @@
             this.labelPrefExpac.TabIndex = 0;
             this.labelPrefExpac.Text = "Default Selected Expansion:";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.AllowMerge = false;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonAbout});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(884, 25);
+            this.toolStrip1.Stretch = true;
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStripMenu";
+            // 
+            // toolStripButtonAbout
+            // 
+            this.toolStripButtonAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
+            this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAbout.Name = "toolStripButtonAbout";
+            this.toolStripButtonAbout.Size = new System.Drawing.Size(44, 22);
+            this.toolStripButtonAbout.Text = "About";
+            this.toolStripButtonAbout.ToolTipText = "About this program";
+            this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
+            // 
             // FFXIVQuestTrackerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 561);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FFXIVQuestTrackerForm";
             this.Text = "FFXIV Quest Tracker";
             this.tabControl.ResumeLayout(false);
@@ -394,7 +424,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMainQuests)).EndInit();
             this.tabPreferences.ResumeLayout(false);
             this.tabPreferences.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -428,5 +461,7 @@
         private DataGridViewTextBoxColumn QuestLevel;
         private DataGridViewTextBoxColumn QuestArea;
         private DataGridViewLinkColumn QuestGarlandToolsLink;
+        private ToolStrip toolStrip1;
+        private ToolStripButton toolStripButtonAbout;
     }
 }

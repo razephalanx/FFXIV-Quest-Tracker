@@ -26,6 +26,9 @@ namespace FFXIV_Quest_Tracker
         }
 
         #region Vars
+        // Var for About text
+        private string aboutText =  "Created by RazePhalanx\n" + 
+                                    "Github: " + "https://github.com/razephalanx/FFXIV-Quest-Tracker";
         // Vars for preference storage
         private string[] rawPreferencesData = null;
         private Dictionary<string, string> preferencesDictionary;
@@ -47,7 +50,7 @@ namespace FFXIV_Quest_Tracker
             InitializeComponent();
             
             // Prepare program
-            mainStartup();
+            MainStartup();
         }
 
         #region Main tab
@@ -55,23 +58,15 @@ namespace FFXIV_Quest_Tracker
         private void comboBoxMainExpac_SelectedIndexChanged(object sender, EventArgs e)
         {
             currentExpac = comboBoxMainExpac.Text;
-            loadCategories(currentExpac);
-            loadMainData(currentExpac, currentCategory);
+            LoadCategories(currentExpac);
+            LoadMainData(currentExpac, currentCategory);
         }
 
         // Store new selected category
         private void comboBoxMainCategory_SelectionChangeCommitted(object sender, EventArgs e)
         {
             currentCategory = comboBoxMainCategory.Text;
-            loadMainData(currentExpac, currentCategory);
-        }
-        #endregion
-
-        #region Preferences
-        // Store selected theme
-        private void comboBoxPrefTheme_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            selectedTheme = comboBoxPrefTheme.Text;
+            LoadMainData(currentExpac, currentCategory);
         }
 
         // Open Garland Tools Data link in browser on URL click
@@ -81,10 +76,27 @@ namespace FFXIV_Quest_Tracker
             {
                 //System.Diagnostics.Process.Start("cmd", "c/ start " + dataGridViewMainQuests[e.ColumnIndex, e.RowIndex].Value.ToString());
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dataGridViewMainQuests[e.ColumnIndex, e.RowIndex].Value.ToString())
-                                                                                        { UseShellExecute = true });
+                { UseShellExecute = true });
             }
         }
 
+        // Display information about the program
+        private void toolStripButtonAbout_Click(object sender, EventArgs e)
+        {
+            using (AboutBoxFFXIVQT box = new AboutBoxFFXIVQT())
+            {
+                box.ShowDialog();
+            }
+        }
+        #endregion
+
+        #region Preferences
+        // Store selected theme
+        private void comboBoxPrefTheme_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            selectedTheme = comboBoxPrefTheme.Text;
+        }
+              
         // Store selected expac
         private void comboBoxPrefExpac_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -139,7 +151,6 @@ namespace FFXIV_Quest_Tracker
             selectedQuestList = currentQuestList;
         }
 
-
         // Save preferences to file
         private void buttonSavePref_Click(object sender, EventArgs e)
         {
@@ -158,7 +169,7 @@ namespace FFXIV_Quest_Tracker
             // Write values to file
             File.WriteAllLines(_filePath, lines);
             // Show message on completion
-            System.Windows.Forms.MessageBox.Show("Preferences saved.", "NOTICE", MessageBoxButtons.OK);
+            System.Windows.Forms.MessageBox.Show("Preferences saved.", "NOTICE", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // Reset quest list location text box to default value
@@ -170,11 +181,5 @@ namespace FFXIV_Quest_Tracker
             selectedQuestList = defaultQuestListLocation;
         }
         #endregion
-
-        // Change theme
-        private void changeTheme()
-        {
-            // TODO
-        }
     }
 }

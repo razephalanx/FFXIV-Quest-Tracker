@@ -11,7 +11,7 @@ namespace FFXIV_Quest_Tracker
         /// <summary>
         /// Load preferences from text file located in same directory as executable
         /// </summary>
-        private void loadPrefs()
+        private void LoadPrefs()
         {
             #region Set up variables for loading preferences
             // Get file path to preferences.txt
@@ -91,12 +91,12 @@ namespace FFXIV_Quest_Tracker
             currentSave = selectedSave = preferencesDictionary["saveLocation"];
             currentQuestList = selectedQuestList = preferencesDictionary["questListLocation"];
             // Load data from save and quest list files
-            loadQuestData();
-            loadQuestList();
+            LoadQuestData();
+            LoadQuestList();
             // Fill out combobox options
-            loadExpansions();
+            LoadExpansions();
             comboBoxMainExpac.SelectedIndex = comboBoxMainExpac.FindStringExact(currentExpac);
-            loadCategories(currentExpac);
+            LoadCategories(currentExpac);
 
             // Default Expansion
             if (comboBoxPrefExpac.FindString(preferencesDictionary["defaultExpac"]) != -1)
@@ -129,16 +129,16 @@ namespace FFXIV_Quest_Tracker
         /// <summary>
         /// Load quest list into Main tab
         /// </summary>
-        private void mainStartup()
+        private void MainStartup()
         {
-            loadPrefs();
-            loadMainData(currentExpac, currentCategory);
+            LoadPrefs();
+            LoadMainData(currentExpac, currentCategory);
         }
 
         /// <summary>
         /// Add items to Expansion drop down list
         /// </summary>
-        private void loadExpansions()
+        private void LoadExpansions()
         {
             foreach(KeyValuePair<string, Dictionary<string, List<QuestStruct>>> pair in questDictionary)
             {
@@ -151,7 +151,7 @@ namespace FFXIV_Quest_Tracker
         /// Add items to Category drop down list according to input expansion name
         /// </summary>
         /// <param name="expac"></param>
-        private void loadCategories(string expac)
+        private void LoadCategories(string expac)
         {
             comboBoxMainCategory.Items.Clear();
             foreach(KeyValuePair<string, Dictionary<string, List<QuestStruct>>> pair in questDictionary)
@@ -170,7 +170,7 @@ namespace FFXIV_Quest_Tracker
         /// <summary>
         /// Load quest list into vars
         /// </summary>
-        private void loadQuestList()
+        private void LoadQuestList()
         {
             // Set up vars
             string expac = "";
@@ -253,7 +253,7 @@ namespace FFXIV_Quest_Tracker
         /// <summary>
         /// Load completed quest data
         /// </summary>
-        private void loadQuestData()
+        private void LoadQuestData()
         {
             // Set up vars
             string expac = "";
@@ -335,23 +335,50 @@ namespace FFXIV_Quest_Tracker
         /// <summary>
         /// Load information into Main tab's DataGridView
         /// </summary>
-        private void loadMainData(string expac, string category)
+        private void LoadMainData(string expac, string category)
         {
+            // Remove rows already loaded in table
             dataGridViewMainQuests.Rows.Clear();
-            bool completedContainsExpacCategory = (completedQuests.ContainsKey(expac) && completedQuests[expac].ContainsKey(category));
-            foreach (QuestStruct quest in questDictionary[expac][category])
+            // Check if completedQuests contains the selected expac and category
+            if (completedQuests.ContainsKey(expac) && completedQuests[expac].ContainsKey(category))
             {
-                if (completedContainsExpacCategory && completedQuests[expac][category].Contains(quest))
+                // Iterate through all quests in selected expansion + category and add them to dataGridViewMainQuests
+                foreach (QuestStruct quest in questDictionary[expac][category])
                 {
-                    //System.Diagnostics.Debug.WriteLine("Found in completed: " + quest.title);
-                    dataGridViewMainQuests.Rows.Add(true, quest.number, quest.title, quest.level, quest.area, quest.url);
+                    // Mark quest as completed if it appears in completedQuests
+                    if (completedQuests[expac][category].Contains(quest))
+                    {
+                        /* DEBUG
+                        System.Diagnostics.Debug.WriteLine("Found in completed: " + quest.title); //*/
+                        dataGridViewMainQuests.Rows.Add(true, quest.number, quest.title, quest.level, quest.area, quest.url);
+                    }
+                    else
+                    {
+                        /* DEBUG
+                        System.Diagnostics.Debug.WriteLine("Not Found: " + quest.title); //*/
+                        dataGridViewMainQuests.Rows.Add(false, quest.number, quest.title, quest.level, quest.area, quest.url);
+                    }
                 }
-                else
+            }
+            else
+            {
+                // Iterate through all quests in selected expansion + category and add them to dataGridViewMainQuests
+                foreach (QuestStruct quest in questDictionary[expac][category])
                 {
-                    //System.Diagnostics.Debug.WriteLine("Not Found: " + quest.title);
+                    /* DEBUG
+                    System.Diagnostics.Debug.WriteLine("Not Found: " + quest.title); //*/
                     dataGridViewMainQuests.Rows.Add(false, quest.number, quest.title, quest.level, quest.area, quest.url);
                 }
             }
+        }
+
+        /// <summary>
+        /// Change program theme
+        /// </summary>
+        /// <param name="theme"></param>
+        private void ChangeTheme(string theme)
+        {
+            // TODO
         }
     }
 }
