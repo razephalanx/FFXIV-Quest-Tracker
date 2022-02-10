@@ -232,7 +232,7 @@ namespace FFXIV_Quest_Tracker
                             quest.area = split[3];
                             //bool uriSuccess = Uri.TryCreate(@"https://garlandtools.org/db/#quest/" + split[4], , quest.url);
                             quest.url = new Uri(@"https://garlandtools.org/db/#quest/" + split[4]);
-                            //quest.url = @"https://garlandtools.org/db/#quest/" + split[4];
+                            quest.urlCode = split[4];
                             questList.Add(quest);
                         }
                     }
@@ -241,11 +241,10 @@ namespace FFXIV_Quest_Tracker
             catch (FileNotFoundException ex)
             {
                 System.Windows.Forms.MessageBox.Show("Quest list file not found. Please place a file called \"FFXIVQT_questlist.txt\"" +
-                                                     "in the same directory as this program's executable. and try again",
+                                                     "in the same directory as this program's executable and try again",
                                                      "ERROR",
                                                      MessageBoxButtons.OK,
                                                      MessageBoxIcon.Error);
-                Application.Exit();
                 Environment.Exit(-1);
             }
         }
@@ -262,6 +261,57 @@ namespace FFXIV_Quest_Tracker
             Dictionary<string, List<QuestStruct>> questCategories = null;
             completedQuests = new Dictionary<string, Dictionary<string, List<QuestStruct>>>();
             char[] delimiterChars = { '\t' };
+
+            // Create a blank quest data file if one does not exist
+            if (!File.Exists(currentSave))
+            {
+                string[] lines = {  "### A Realm Reborn ###",
+                                    "=== Main Story Quest (2.0) ===", "=== Main Story Quest (2.1 - 2.5) ===", "=== Trial Series - Primals ===",
+                                    "=== Raid Series - Bahamut ===", "=== Alliance Raids - Crystal Tower ===", "=== Relic Weapon - Zodiac ===",
+                                    "### Heavensward ###",
+                                    "=== Main Story Quest (3.0) ===", "=== Main Story Quest (3.1 - 3.5) ===", "=== Trial Series - Warring Triad ===",
+                                    "=== Raid Series - Alexander ===", "=== Alliance Raids - Shadow of Mhach ===", "=== Relic Weapon - Anima ===",
+                                    "### Stormblood ###",
+                                    "=== Main Story Quest (4.0) ===", "=== Main Story Quest (4.1 - 4.5) ===", "=== Trial Series - Four Lords ===",
+                                    "=== Raid Series - Omega ===", "=== Alliance Raids - Return to Ivalice ===", "=== Relic Weapon - Eureka ===",
+                                    "### Shadowbringers ###",
+                                    "=== Main Story Quest (5.0) ===", "=== Main Story Quest (5.1 - 5.5) ===", "=== Trial Series - The Sorrow of Werlyt ===",
+                                    "=== Raid Series - Eden ===", "=== Alliance Raids - YoRHa: Dark Apocalypse ===", "=== Relic Weapon - Resistance ===",
+                                    "### Endwalker ###",
+                                    "=== Main Story Quest (6.0) ===",
+                                    "### Beast Tribe Quests (ARR/Heavensward/Stormblood) ###",
+                                    "=== Amalj'aa ===", "=== Ananta ===", "=== Ixal ===", "=== Kobold ===", "=== Moogle ===",
+                                    "=== Namazu ===", "=== Sahagin ===", "=== Sylph ===", "=== Vanu Vanu ===", "=== Vath ===",
+                                    "### Beast Tribe Quests (Shadowbringers) ###",
+                                    "=== Dwarf ===", "=== Pixie ===", "=== Qitari ===",
+                                    "### Class & Battle Job Quests ###",
+                                    "=== Crystalline Mean ===", "=== Astrologian ===", "=== Black Mage ===", "=== Blue Mage ===", "=== Red Mage ===",
+                                    "=== Sage ===", "=== Scholar ===", "=== Summoner ===", "=== White Mage ===", "=== Arcanist ===", "=== Conjurer ===", "=== Thaumaturge ===",
+                                    "=== Bard ===", "=== Dancer ===", "=== Dark Knight ===", "=== Dragoon ===", "=== Gunbreaker ===", "=== Machinist ===", "=== Monk ===",
+                                    "=== Ninja ===", "=== Paladin ===", "=== Reaper ===", "=== Samurai ===", "=== Warrior ===", "=== Archer ===", "=== Gladiator ===",
+                                    "=== Lancer ===", "=== Marauder ===", "=== Pugilist ===", "=== Rogue ===",
+                                    "### Disciple of the Hand ###",
+                                    "=== Alchemist ===", "=== Armorer ===", "=== Blacksmith ===", "=== Carpenter ===", "=== Culinarian ===", "=== Goldsmith ===",
+                                    "=== Leatherworker ===", "=== Weaver ===",
+                                    "### Disciple of the Land ###",
+                                    "=== Botanist ===", "=== Fisher ===", "=== Miner ===",
+                                    "### Role Quests ###",
+                                    "=== Healer (Endwalker) ===", "=== Healer (Shadowbringers) ===", "=== Magical Ranged DPS (Endwalker) ===",
+                                    "=== Magical Ranged DPS (Shadowbringers) ===", "=== Melee DPS (Endwalker) ===", "=== Physical DPS (Endwalker) ===",
+                                    "=== Physical DPS (Shadowbringers) ===", "=== Tank (Endwalker) ===", "=== Tank (Shadowbringers) ===", "=== Studium ===", "=== Role Quests ===",
+                                    "### Grand Company ###",
+                                    "=== Immortal Flames ===", "=== Maelstrom ===", "=== Order of the Twin Adder ===",
+                                    "### Seasonal Events ###",
+                                    "=== All Saints' Wake ===", "=== Egg Hunts ===", "=== Gold Saucer Festivities ===", "=== Heavensturn ===",
+                                    "=== Little Ladies' Day ===", "=== Moonfire Faire ===", "=== Rising ===", "=== Starlight Celebration ===",
+                                    "=== Valentione's & Little Ladies' Day ===", "=== Valentiones' Day ===",
+                                    "### Special Quests ###",
+                                    "=== Collaboration Quests ===", "=== Special Quests ===", "=== Sephiroth ===",
+                                    "### Sidequests ###",
+                                    "=== All ===",
+                                    "### EOF ###"};
+                File.WriteAllLines(currentSave, lines);
+            }
 
             // Read each line and create separate list of QuestStruct for each category within each expansion
             try
@@ -314,7 +364,7 @@ namespace FFXIV_Quest_Tracker
                             }
                             quest.area = split[3];
                             quest.url = new Uri(@"https://garlandtools.org/db/#quest/" + split[4]);
-                            //quest.url = @"https://garlandtools.org/db/#quest/" + split[4];
+                            quest.urlCode =  split[4];
                             questList.Add(quest);
                         }
                     }
@@ -323,11 +373,10 @@ namespace FFXIV_Quest_Tracker
             catch (FileNotFoundException ex)
             {
                 System.Windows.Forms.MessageBox.Show("Quest data file not found. Please place a file called \"FFXIVQT_data.txt\"" +
-                                                     "in the same directory as this program's executable. and try again",
+                                                     "in the same directory as this program's executable and try again",
                                                      "ERROR",
                                                      MessageBoxButtons.OK,
                                                      MessageBoxIcon.Error);
-                Application.Exit();
                 Environment.Exit(-1);
             }
         }
@@ -379,6 +428,45 @@ namespace FFXIV_Quest_Tracker
         private void ChangeTheme(string theme)
         {
             // TODO
+        }
+
+        /// <summary>
+        /// Save contents of completedQuests to a txt file
+        /// </summary>
+        /// <param name="_filePath"></param>
+        private void SaveQuestData(string _filePath)
+        {
+            // Delete file if it already existed
+            if (File.Exists(_filePath))
+            {
+                File.Delete(_filePath);
+            }
+
+            /* DEBUG
+            System.Diagnostics.Debug.WriteLine("Saving at: " + _filePath); //*/
+
+            // Generate List of lines to write from completedQuests
+            List<string> lines = new List<string>();
+            foreach (string expac in completedQuests.Keys)
+            {
+                lines.Add("### " + expac + " ###");
+                foreach (string category in completedQuests[expac].Keys)
+                {
+                    lines.Add("=== " + category + " ===");
+                    foreach (QuestStruct quest in completedQuests[expac][category])
+                    {
+                        lines.Add(quest.ToString());
+                    }
+                }
+            }
+            // Add end of file line
+            lines.Add("### EOF ###");
+
+            // Write lines to file
+            File.WriteAllLines(_filePath, lines);
+
+            // Change dataChanged to false since data has just been saved
+            dataChanged = false;
         }
     }
 }
