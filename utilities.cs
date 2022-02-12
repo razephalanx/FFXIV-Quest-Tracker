@@ -183,6 +183,14 @@ namespace FFXIV_Quest_Tracker
             // Read each line and create separate list of QuestStruct for each category within each expansion
             try
             {
+                // Make sure quest data file has "### EOF ###" at the end
+                if (File.ReadLines(currentQuestList).Last() != "### EOF ###")
+                {
+                    /* DEBUG
+                    System.Diagnostics.Debug.WriteLine("Adding \"### EOF ###\" to end of quest list file"); //*/
+                    File.AppendAllText(currentQuestList, "\n### EOF ###");
+                }
+
                 foreach (var line in File.ReadAllLines(currentQuestList))
                 {
                     // Skip line if empty or null
@@ -316,6 +324,15 @@ namespace FFXIV_Quest_Tracker
             // Read each line and create separate list of QuestStruct for each category within each expansion
             try
             {
+                // Make sure quest data file has "### EOF ###" at the end
+                if (File.ReadLines(currentSave).Last() != "### EOF ###")
+                {
+                    /* DEBUG
+                    System.Diagnostics.Debug.WriteLine("Adding \"### EOF ###\" to end of data file"); //*/
+                    File.AppendAllText(currentSave, "\n### EOF ###");
+                }
+
+                // Read all lines in the file
                 foreach (var line in File.ReadAllLines(currentSave))
                 {
                     // Skip line if empty or null
