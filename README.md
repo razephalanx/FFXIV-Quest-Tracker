@@ -1,7 +1,16 @@
-﻿<img style="float:left; width:65px; height:65px;"
+﻿<p>
+<img align="left" style="float:left; width:65px; height:65px;"
  alt="FFXIV Quest Tracker Icon"
- src="Resources/FFXIV_Quest_Icon.png"></img>
+ src="Resources/FFXIV_Quest_Icon.png">
+
 # FFXIV Quest Tracker
+
+</img>
+
+<br clear="left">
+
+</p>
+
 [repo]: https://github.com/razephalanx/FFXIV-Quest-Tracker
 [latestRelease]: https://github.com/razephalanx/FFXIV-Quest-Tracker/releases/latest
 
@@ -24,7 +33,7 @@ The user can also specify what quests should be displayed by the program on star
 * Simple and lightweight
 * Portable (no install required)
 * Can save and read from multiple different lists of completed quests
-* Can read [custom quest lists](#making-custom-quest-lists)
+* Can read [custom quest lists](#making-custom-quest-listsupdating-existing-quest-lists)
 
 ## :triangular_flag_on_post: Getting Started
 Place the executable and the main quest list text file from the [latest release][latestRelease] in the
