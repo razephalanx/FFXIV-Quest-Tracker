@@ -436,6 +436,9 @@ namespace FFXIV_Quest_Tracker
                     dataGridViewMainQuests.Rows.Add(false, quest.number, quest.title, quest.level, quest.area, quest.url);
                 }
             }
+
+            // Perform DataGridView layout
+            dataGridViewMainQuests.PerformLayout();
         }
 
         /// <summary>
