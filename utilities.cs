@@ -238,9 +238,25 @@ namespace FFXIV_Quest_Tracker
                                 throw new Exception("Bad quest level: " + split[2]);
                             }
                             quest.area = split[3];
-                            //bool uriSuccess = Uri.TryCreate(@"https://garlandtools.org/db/#quest/" + split[4], , quest.url);
-                            quest.url = new Uri(@"https://garlandtools.org/db/#quest/" + split[4]);
-                            quest.urlCode = split[4];
+
+                            // Check if quest URL is present by checking if split has 4 items or if split[4] is empty
+                            if (split.Count() < 5 || split[4] == "")
+                            {
+                                quest.url = new Uri(@"https://garlandtools.org/db/#browse/quest");
+                                quest.urlCode = "12345";
+                            }
+                            // Check if quest URL is not intended to be from Garland Data
+                            else if (split[4].StartsWith("https://") || split[4].StartsWith("http://"))
+                            {
+                                quest.url = new Uri(split[4]);
+                                quest.urlCode = split[4].Substring(split[4].LastIndexOf("/") + 1);
+                            }
+                            // Assume input is a Garland Tools Data ID if the two above conditions are false
+                            else
+                            {
+                                quest.url = new Uri(@"https://garlandtools.org/db/#quest/" + split[4]);
+                                quest.urlCode = split[4];
+                            }
                             questList.Add(quest);
                         }
                     }
@@ -380,8 +396,25 @@ namespace FFXIV_Quest_Tracker
                                 throw new Exception("Bad quest level: " + split[2]);
                             }
                             quest.area = split[3];
-                            quest.url = new Uri(@"https://garlandtools.org/db/#quest/" + split[4]);
-                            quest.urlCode =  split[4];
+
+                            // Check if quest URL is present by checking if split has 4 items or if split[4] is empty
+                            if (split.Count() < 5 || split[4] == "")
+                            {
+                                quest.url = new Uri(@"https://garlandtools.org/db/#browse/quest");
+                                quest.urlCode = "12345";
+                            }
+                            // Check if quest URL is not intended to be from Garland Data
+                            else if (split[4].StartsWith("https://") || split[4].StartsWith("http://"))
+                            {
+                                quest.url = new Uri(split[4]);
+                                quest.urlCode = split[4].Substring(split[4].LastIndexOf("/") + 1);
+                            }
+                            // Assume input is a Garland Tools Data ID if the two above conditions are false
+                            else
+                            {
+                                quest.url = new Uri(@"https://garlandtools.org/db/#quest/" + split[4]);
+                                quest.urlCode = split[4];
+                            }
                             questList.Add(quest);
                         }
                     }
@@ -436,9 +469,6 @@ namespace FFXIV_Quest_Tracker
                     dataGridViewMainQuests.Rows.Add(false, quest.number, quest.title, quest.level, quest.area, quest.url);
                 }
             }
-
-            // Perform DataGridView layout
-            dataGridViewMainQuests.PerformLayout();
         }
 
         /// <summary>
