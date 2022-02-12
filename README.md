@@ -24,7 +24,7 @@ The user can also specify what quests should be displayed by the program on star
 * Simple and lightweight
 * Portable (no install required)
 * Can save and read from multiple different lists of completed quests
-* Can read [custom quest lists](#making-custom-quest-lists)
+* Can read [custom quest lists](#making-custom-quest-lists/updating-existing-quest-lists)
 
 ## :triangular_flag_on_post: Getting Started
 Place the executable and the main quest list text file from the [latest release][latestRelease] in the
