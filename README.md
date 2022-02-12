@@ -33,7 +33,7 @@ The user can also specify what quests should be displayed by the program on star
 * Simple and lightweight
 * Portable (no install required)
 * Can save and read from multiple different lists of completed quests
-* Can read [custom quest lists](#making-custom-quest-listsupdating-existing-quest-lists)
+* Can read [custom quest lists](#making-custom-quest-lists-and-updating-existing-quest-lists)
 
 ## :triangular_flag_on_post: Getting Started
 Place the executable and the main quest list text file from the [latest release][latestRelease] in the
@@ -68,7 +68,7 @@ simply click the check box on the row of the quest you want to mark complete.
 If the user makes a change to the list of completed quests and tries to exit the program without saving,
 the program will prompt the user to save their changes to the default save location before closing.
 
-### :white_medium_square: Making Custom Quest Lists/Updating Existing Quest Lists
+### :white_medium_square: Making Custom Quest Lists and Updating Existing Quest Lists
 FFXIV Quest Tracker can read any checklist as a "quest list" and generate a category and sub-category for
 them in the quest table as well as add them to the selection of default categories in Preferences. Users can
 point the program to a .txt file and have it automatically populate the appropriate fields so long as the
