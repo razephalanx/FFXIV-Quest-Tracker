@@ -132,5 +132,5 @@ web page.
   \#\#\# EOF \#\#\#
 
 ---
-FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
+FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.  
 FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
