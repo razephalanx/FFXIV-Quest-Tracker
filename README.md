@@ -130,3 +130,7 @@ web page.
   === Fake Sub-Category ===  
   1	Fake Quest	50	Fake Location	<span>https://www.google.com</span>  
   \#\#\# EOF \#\#\#
+
+---
+FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
+FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
