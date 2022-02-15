@@ -1,5 +1,5 @@
 ﻿<p>
-<img align="left" style="float:left; width:65px; height:65px;"
+<img align="left" style="float:left; width:70px; height:70px;"
  alt="FFXIV Quest Tracker Icon"
  src="Resources/FFXIV_Quest_Icon.png">
 
