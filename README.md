@@ -91,6 +91,7 @@ file follows the appropriate formatting style:
 	* The "URL/Garland Tools Data quest ID number" field can contain a URL to any page that a user desires.
 	For example, if the user wants the displayed URL to be "https://www.google.com" then that can be typed as-is
 	and the program will correctly display it and link to "https://www.google.com".
+	* Quests **MUST** belong to a category and sub-category
 * Last line in file: "### EOF ###"
     * This line should be included to ensure that the program knows when to stop reading the quest
 	  list file. Anything after this line will not be read.
