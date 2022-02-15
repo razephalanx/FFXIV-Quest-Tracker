@@ -60,10 +60,10 @@ The program displays a table of quests with 5 columns:
 ### :white_medium_square: Completing Quests
 The program displays all quests available from the main quest list file. To mark a quest as completed,
 simply click the check box on the row of the quest you want to mark complete.  
-* Clicking "Save" will save the current list of completed quests to the default save file (path is displayed in
-* Preferences).
-* Clicking "Save As" will give the user a save file dialog window to select where to save the current list of
-* completed quests.
+* Clicking "Save" will save the current list of completed quests to the default save file (path is displayed in 
+Preferences).
+* Clicking "Save As" will give the user a save file dialog window to select where to save the current list of 
+completed quests.
 
 If the user makes a change to the list of completed quests and tries to exit the program without saving,
 the program will prompt the user to save their changes to the default save location before closing.
