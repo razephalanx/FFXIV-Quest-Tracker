@@ -33,7 +33,7 @@ The user can also specify what quests should be displayed by the program on star
 * Simple and lightweight
 * Portable (no install required)
 * Can save and read from multiple different lists of completed quests
-* Can read [custom quest lists](#making-custom-quest-lists-and-updating-existing-quest-lists)
+* Can read [custom quest lists](#white_medium_square-making-custom-quest-lists-and-updating-existing-quest-lists)
 
 ## :triangular_flag_on_post: Getting Started
 Place the executable and the main quest list text file from the [latest release][latestRelease] in the
@@ -87,7 +87,7 @@ file follows the appropriate formatting style:
 		* Area issuer is in is "Ul'day - Steps of Nald"
 		* ID number is "66104"
     		* Table displays "https://www.garlandtools.org/db/#quest/66104"
-			* More about using URLs in the table [here](#about-urls-in-the-table)
+			* More about using URLs in the table [here](#white_small_square-about-urls-in-the-table)
 	* The "URL/Garland Tools Data quest ID number" field can contain a URL to any page that a user desires.
 	For example, if the user wants the displayed URL to be "https://www.google.com" then that can be typed as-is
 	and the program will correctly display it and link to "https://www.google.com".
