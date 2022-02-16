@@ -47,6 +47,7 @@ can accomplish this in one of two ways:
 	4) Restart the Program
 * **Option 2**: Rename the file you wish to use to the name used by the default data file ("FFXIVQT_data.txt")
 
+
 ## :grey_question: Using the Program
 ### :white_medium_square: Reading the Table
 The program displays a table of quests with 5 columns:
@@ -68,7 +69,8 @@ completed quests.
 If the user makes a change to the list of completed quests and tries to exit the program without saving,
 the program will prompt the user to save their changes to the default save location before closing.
 
-### :white_medium_square: Making Custom Quest Lists and Updating Existing Quest Lists
+
+## :books: Making Custom Quest Lists and Updating Existing Quest Lists
 FFXIV Quest Tracker can read any checklist as a "quest list" and generate a category and sub-category for
 them in the quest table as well as add them to the selection of default categories in Preferences. Users can
 point the program to a .txt file and have it automatically populate the appropriate fields so long as the
@@ -79,7 +81,7 @@ file follows the appropriate formatting style:
     * Example: "=== Main Story Quest (2.0) ===" is a sub-category called "Main Story Quest (2.0)" that belongs to
 	whichever main category is listed above it in the quest list file.
 * Quests/Objectives: "Number	Title	Level	Area	URL/Garland Tools Data quest ID number"
-    * **NOTE:** Each item in a quest has a **tab** in between them, **NOT** a space nor multiple spaces
+    * :warning: **NOTE:** Each item in a quest has a **tab** in between them, **NOT** a space nor multiple spaces
 	* Example: "1	Close to Home	Ul'dah - Steps of Nald	66104"
     	* Quest #1 in the subcategory listed above it in the quest list file
 		* Title is "Close to Home"
@@ -91,7 +93,7 @@ file follows the appropriate formatting style:
 	* The "URL/Garland Tools Data quest ID number" field can contain a URL to any page that a user desires.
 	For example, if the user wants the displayed URL to be "https://www.google.com" then that can be typed as-is
 	and the program will correctly display it and link to "https://www.google.com".
-	* Quests **MUST** belong to a category and sub-category
+	* :warning: **NOTE**: Quests **MUST** belong to a category and sub-category
 * Last line in file: "### EOF ###"
     * This line should be included to ensure that the program knows when to stop reading the quest
 	  list file. Anything after this line will not be read.
@@ -107,7 +109,7 @@ The file containing the list of completed quests is formatted in the same way, a
 custom lists of completed quests in the same way as creating custom quest lists.
 
 ---
-#### :white_small_square: About URLs in the Table
+### :white_small_square: About URLs in the Table
 FFXIV Quest Tracker reads the "URL" field in the quest list/data files in 1 of 3 ways:
 
 1. URL is a quest ID number from Garland Tools Data and gets autocompleted to be a link to the
@@ -122,7 +124,7 @@ URLs added to the table are clickable links that open the user's default browser
 web page.
 
 ---
-#### :white_small_square: Sample Quest List File Contents
+### :white_small_square: Sample Quest List File Contents
 > \#\#\# A Realm Reborn \#\#\#  
   === Main Story Quest (2.0) ===  
   1	Close to home	1	Ul'dah - Steps of Nald	66104  
@@ -133,5 +135,12 @@ web page.
   \#\#\# EOF \#\#\#
 
 ---
+
+Garland Tools was created and is maintained by Clorifex Ezalor of Zalera.  
+[Garland Tools Website](https://www.garlandtools.org/)  
+[Garland Tools Discord](https://discord.gg/hfzmApj)  
+
+---
+
 FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.  
 FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
