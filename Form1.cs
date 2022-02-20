@@ -56,6 +56,9 @@ namespace FFXIV_Quest_Tracker
             // Prepare program
             dataChanged = false;
             MainStartup();
+
+            // Sort quest table by ascending quest number by default
+            dataGridViewMainQuests.Sort(dataGridViewMainQuests.Columns[1], System.ComponentModel.ListSortDirection.Ascending);
         }
 
         #region Main tab
@@ -74,19 +77,34 @@ namespace FFXIV_Quest_Tracker
             LoadMainData(currentExpac, currentCategory);
         }
 
-        // Actions for cell values being clicked/changed
-        private void dataGridViewMainQuests_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// Action taken when user clicked on column header.
+        /// Used to fix sorting issues.
+        /// Could use improvements as sorting is still weird, only consistent now.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridViewMainQuests_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // Open Garland Tools Data link in browser
-            if (e.RowIndex != -1 && e.ColumnIndex == 5 && dataGridViewMainQuests.Columns[e.ColumnIndex] is DataGridViewLinkColumn)
+            // Check the column name the user is sorting by
+            DataGridViewColumn col = dataGridViewMainQuests.SortedColumn;
+            // Return if the column is QuestNumber
+            if (col.Name == "QuestNumber")
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dataGridViewMainQuests[e.ColumnIndex, e.RowIndex].Value.ToString())
-                { UseShellExecute = true });
+                return;
             }
-            // Record quest being marked as complete when its checkbox is selected
-            else if (e.RowIndex != -1 && e.ColumnIndex == 0 && dataGridViewMainQuests.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn)
+            // Get sorting order
+            SortOrder order = dataGridViewMainQuests.SortOrder;
+            // Sort by ascending QuestNumber before anything else
+            dataGridViewMainQuests.Sort(dataGridViewMainQuests.Columns[1], System.ComponentModel.ListSortDirection.Ascending);
+            // Sort by user's decision
+            if (order == SortOrder.Ascending)
             {
-                dataGridViewMainQuests.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                dataGridViewMainQuests.Sort(col, System.ComponentModel.ListSortDirection.Ascending);
+            }
+            else
+            {
+                dataGridViewMainQuests.Sort(col, System.ComponentModel.ListSortDirection.Descending);
             }
         }
 

@@ -31,17 +31,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FFXIVQuestTrackerForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
             this.buttonMainSaveAs = new System.Windows.Forms.Button();
             this.buttonMainSaveDefault = new System.Windows.Forms.Button();
             this.dataGridViewMainQuests = new System.Windows.Forms.DataGridView();
-            this.QuestComplete = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.QuestNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QuestTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QuestLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QuestArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QuestGarlandToolsLink = new System.Windows.Forms.DataGridViewLinkColumn();
             this.comboBoxMainCategory = new System.Windows.Forms.ComboBox();
             this.labelMainCategory = new System.Windows.Forms.Label();
             this.labelMainExpac = new System.Windows.Forms.Label();
@@ -63,6 +58,12 @@
             this.labelPrefExpac = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
+            this.QuestComplete = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.QuestNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QuestTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QuestLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QuestArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QuestGarlandToolsLink = new System.Windows.Forms.DataGridViewLinkColumn();
             this.tabControl.SuspendLayout();
             this.tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMainQuests)).BeginInit();
@@ -127,17 +128,19 @@
             // 
             this.dataGridViewMainQuests.AllowUserToAddRows = false;
             this.dataGridViewMainQuests.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridViewMainQuests.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewMainQuests.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewMainQuests.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMainQuests.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewMainQuests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewMainQuests.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.QuestComplete,
@@ -153,62 +156,8 @@
             this.dataGridViewMainQuests.ShowCellToolTips = false;
             this.dataGridViewMainQuests.Size = new System.Drawing.Size(870, 705);
             this.dataGridViewMainQuests.TabIndex = 4;
-            this.dataGridViewMainQuests.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMainQuests_CellContentClick);
             this.dataGridViewMainQuests.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMainQuests_CellValueChanged);
-            // 
-            // QuestComplete
-            // 
-            this.QuestComplete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.QuestComplete.HeaderText = "✓";
-            this.QuestComplete.MinimumWidth = 40;
-            this.QuestComplete.Name = "QuestComplete";
-            this.QuestComplete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.QuestComplete.Width = 41;
-            // 
-            // QuestNumber
-            // 
-            this.QuestNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.QuestNumber.DefaultCellStyle = dataGridViewCellStyle2;
-            this.QuestNumber.HeaderText = "#";
-            this.QuestNumber.MinimumWidth = 40;
-            this.QuestNumber.Name = "QuestNumber";
-            this.QuestNumber.ReadOnly = true;
-            this.QuestNumber.Width = 40;
-            // 
-            // QuestTitle
-            // 
-            this.QuestTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.QuestTitle.HeaderText = "Title";
-            this.QuestTitle.MinimumWidth = 100;
-            this.QuestTitle.Name = "QuestTitle";
-            this.QuestTitle.ReadOnly = true;
-            // 
-            // QuestLevel
-            // 
-            this.QuestLevel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.QuestLevel.FillWeight = 20F;
-            this.QuestLevel.HeaderText = "Level";
-            this.QuestLevel.Name = "QuestLevel";
-            this.QuestLevel.ReadOnly = true;
-            // 
-            // QuestArea
-            // 
-            this.QuestArea.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.QuestArea.FillWeight = 80F;
-            this.QuestArea.HeaderText = "Area";
-            this.QuestArea.Name = "QuestArea";
-            this.QuestArea.ReadOnly = true;
-            // 
-            // QuestGarlandToolsLink
-            // 
-            this.QuestGarlandToolsLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.QuestGarlandToolsLink.HeaderText = "GTD";
-            this.QuestGarlandToolsLink.MinimumWidth = 40;
-            this.QuestGarlandToolsLink.Name = "QuestGarlandToolsLink";
-            this.QuestGarlandToolsLink.ReadOnly = true;
-            this.QuestGarlandToolsLink.TrackVisitedState = false;
-            this.QuestGarlandToolsLink.Width = 40;
+            this.dataGridViewMainQuests.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewMainQuests_ColumnHeaderMouseClick);
             // 
             // comboBoxMainCategory
             // 
@@ -448,6 +397,60 @@
             this.toolStripButtonAbout.Text = "About";
             this.toolStripButtonAbout.ToolTipText = "About this program";
             this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
+            // 
+            // QuestComplete
+            // 
+            this.QuestComplete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.QuestComplete.HeaderText = "✓";
+            this.QuestComplete.MinimumWidth = 40;
+            this.QuestComplete.Name = "QuestComplete";
+            this.QuestComplete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.QuestComplete.Width = 41;
+            // 
+            // QuestNumber
+            // 
+            this.QuestNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.QuestNumber.DefaultCellStyle = dataGridViewCellStyle3;
+            this.QuestNumber.HeaderText = "#";
+            this.QuestNumber.MinimumWidth = 40;
+            this.QuestNumber.Name = "QuestNumber";
+            this.QuestNumber.ReadOnly = true;
+            this.QuestNumber.Width = 40;
+            // 
+            // QuestTitle
+            // 
+            this.QuestTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.QuestTitle.HeaderText = "Title";
+            this.QuestTitle.MinimumWidth = 100;
+            this.QuestTitle.Name = "QuestTitle";
+            this.QuestTitle.ReadOnly = true;
+            // 
+            // QuestLevel
+            // 
+            this.QuestLevel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.QuestLevel.FillWeight = 25F;
+            this.QuestLevel.HeaderText = "Level";
+            this.QuestLevel.Name = "QuestLevel";
+            this.QuestLevel.ReadOnly = true;
+            // 
+            // QuestArea
+            // 
+            this.QuestArea.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.QuestArea.FillWeight = 80F;
+            this.QuestArea.HeaderText = "Area";
+            this.QuestArea.Name = "QuestArea";
+            this.QuestArea.ReadOnly = true;
+            // 
+            // QuestGarlandToolsLink
+            // 
+            this.QuestGarlandToolsLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.QuestGarlandToolsLink.HeaderText = "GTD";
+            this.QuestGarlandToolsLink.MinimumWidth = 40;
+            this.QuestGarlandToolsLink.Name = "QuestGarlandToolsLink";
+            this.QuestGarlandToolsLink.ReadOnly = true;
+            this.QuestGarlandToolsLink.TrackVisitedState = false;
+            this.QuestGarlandToolsLink.Width = 40;
             // 
             // FFXIVQuestTrackerForm
             // 
