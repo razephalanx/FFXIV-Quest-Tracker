@@ -30,10 +30,11 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FFXIVQuestTrackerForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FFXIVQuestTrackerForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.buttonCancelDataChanges = new System.Windows.Forms.Button();
             this.buttonMainSaveAs = new System.Windows.Forms.Button();
             this.buttonMainSaveDefault = new System.Windows.Forms.Button();
             this.dataGridViewMainQuests = new System.Windows.Forms.DataGridView();
@@ -87,6 +88,7 @@
             // tabMain
             // 
             this.tabMain.AutoScroll = true;
+            this.tabMain.Controls.Add(this.buttonCancelDataChanges);
             this.tabMain.Controls.Add(this.buttonMainSaveAs);
             this.tabMain.Controls.Add(this.buttonMainSaveDefault);
             this.tabMain.Controls.Add(this.dataGridViewMainQuests);
@@ -102,12 +104,23 @@
             this.tabMain.Text = "Main";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
+            // buttonCancelDataChanges
+            // 
+            this.buttonCancelDataChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCancelDataChanges.Location = new System.Drawing.Point(6, 676);
+            this.buttonCancelDataChanges.Name = "buttonCancelDataChanges";
+            this.buttonCancelDataChanges.Size = new System.Drawing.Size(294, 23);
+            this.buttonCancelDataChanges.TabIndex = 7;
+            this.buttonCancelDataChanges.Text = "Cancel Changes";
+            this.buttonCancelDataChanges.UseVisualStyleBackColor = true;
+            this.buttonCancelDataChanges.Click += new System.EventHandler(this.buttonCancelDataChanges_Click);
+            // 
             // buttonMainSaveAs
             // 
             this.buttonMainSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonMainSaveAs.Location = new System.Drawing.Point(6, 676);
+            this.buttonMainSaveAs.Location = new System.Drawing.Point(6, 647);
             this.buttonMainSaveAs.Name = "buttonMainSaveAs";
-            this.buttonMainSaveAs.Size = new System.Drawing.Size(292, 23);
+            this.buttonMainSaveAs.Size = new System.Drawing.Size(294, 23);
             this.buttonMainSaveAs.TabIndex = 6;
             this.buttonMainSaveAs.Text = "Save As";
             this.buttonMainSaveAs.UseVisualStyleBackColor = true;
@@ -116,9 +129,9 @@
             // buttonMainSaveDefault
             // 
             this.buttonMainSaveDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonMainSaveDefault.Location = new System.Drawing.Point(6, 647);
+            this.buttonMainSaveDefault.Location = new System.Drawing.Point(6, 618);
             this.buttonMainSaveDefault.Name = "buttonMainSaveDefault";
-            this.buttonMainSaveDefault.Size = new System.Drawing.Size(292, 23);
+            this.buttonMainSaveDefault.Size = new System.Drawing.Size(294, 23);
             this.buttonMainSaveDefault.TabIndex = 5;
             this.buttonMainSaveDefault.Text = "Save";
             this.buttonMainSaveDefault.UseVisualStyleBackColor = true;
@@ -390,7 +403,6 @@
             // toolStripButtonAbout
             // 
             this.toolStripButtonAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
             this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAbout.Name = "toolStripButtonAbout";
             this.toolStripButtonAbout.Size = new System.Drawing.Size(44, 22);
@@ -400,12 +412,13 @@
             // 
             // QuestComplete
             // 
-            this.QuestComplete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.QuestComplete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.QuestComplete.HeaderText = "✓";
-            this.QuestComplete.MinimumWidth = 40;
+            this.QuestComplete.MinimumWidth = 45;
             this.QuestComplete.Name = "QuestComplete";
             this.QuestComplete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.QuestComplete.Width = 41;
+            this.QuestComplete.ToolTipText = "Quest Completed";
+            this.QuestComplete.Width = 45;
             // 
             // QuestNumber
             // 
@@ -416,6 +429,7 @@
             this.QuestNumber.MinimumWidth = 40;
             this.QuestNumber.Name = "QuestNumber";
             this.QuestNumber.ReadOnly = true;
+            this.QuestNumber.ToolTipText = "Quest Number";
             this.QuestNumber.Width = 40;
             // 
             // QuestTitle
@@ -425,6 +439,7 @@
             this.QuestTitle.MinimumWidth = 100;
             this.QuestTitle.Name = "QuestTitle";
             this.QuestTitle.ReadOnly = true;
+            this.QuestTitle.ToolTipText = "Quest Title";
             // 
             // QuestLevel
             // 
@@ -433,6 +448,7 @@
             this.QuestLevel.HeaderText = "Level";
             this.QuestLevel.Name = "QuestLevel";
             this.QuestLevel.ReadOnly = true;
+            this.QuestLevel.ToolTipText = "Quest Level";
             // 
             // QuestArea
             // 
@@ -441,16 +457,17 @@
             this.QuestArea.HeaderText = "Area";
             this.QuestArea.Name = "QuestArea";
             this.QuestArea.ReadOnly = true;
+            this.QuestArea.ToolTipText = "Quest Area";
             // 
             // QuestGarlandToolsLink
             // 
-            this.QuestGarlandToolsLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.QuestGarlandToolsLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.QuestGarlandToolsLink.HeaderText = "GTD";
             this.QuestGarlandToolsLink.MinimumWidth = 40;
             this.QuestGarlandToolsLink.Name = "QuestGarlandToolsLink";
             this.QuestGarlandToolsLink.ReadOnly = true;
+            this.QuestGarlandToolsLink.ToolTipText = "Quest URL";
             this.QuestGarlandToolsLink.TrackVisitedState = false;
-            this.QuestGarlandToolsLink.Width = 40;
             // 
             // FFXIVQuestTrackerForm
             // 
@@ -460,7 +477,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(880, 270);
+            this.MinimumSize = new System.Drawing.Size(880, 310);
             this.Name = "FFXIVQuestTrackerForm";
             this.Text = "FFXIV Quest Tracker";
             this.tabControl.ResumeLayout(false);
@@ -504,6 +521,7 @@
         private ToolStripButton toolStripButtonAbout;
         private Button buttonMainSaveAs;
         private Button buttonMainSaveDefault;
+        private Button buttonCancelDataChanges;
         private DataGridViewCheckBoxColumn QuestComplete;
         private DataGridViewTextBoxColumn QuestNumber;
         private DataGridViewTextBoxColumn QuestTitle;

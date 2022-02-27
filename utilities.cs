@@ -127,12 +127,14 @@ namespace FFXIV_Quest_Tracker
         }
 
         /// <summary>
-        /// Load quest list into Main tab
+        /// Load preferences and quest list
         /// </summary>
         private void MainStartup()
         {
             LoadPrefs();
             LoadMainData(currentExpac, currentCategory);
+            rollbackQuests = new Dictionary<string, Dictionary<string, List<QuestStruct>>>();
+            CopyQuestDictionary(completedQuests, rollbackQuests);
         }
 
         /// <summary>
@@ -472,12 +474,39 @@ namespace FFXIV_Quest_Tracker
         }
 
         /// <summary>
-        /// Change program theme
+        /// Change program theme (NOT YET IMPLEMENTED)
         /// </summary>
         /// <param name="theme"></param>
         private void ChangeTheme(string theme)
         {
             // TODO
+        }
+
+        /// <summary>
+        /// Deep copy contents from one Dictionary(string, Dictionary(string, List(QuestStruct))) to another. REPLACES contents of destination dictionary.
+        /// </summary>
+        /// <param name="src">Source Dictionary to copy data from</param>
+        /// <param name="dst">Destination Dictioanry to copy data to</param>
+        private void CopyQuestDictionary(Dictionary<string, Dictionary<string, List<QuestStruct>>> src, Dictionary<string, Dictionary<string, List<QuestStruct>>> dst)
+        {
+            // Remove contents of destination dictionary
+            dst.Clear();
+
+            // Copy contents of source dictionary to destination dictionary
+            foreach (string expac in src.Keys)
+            {
+                dst.Add(expac, new Dictionary<string, List<QuestStruct>>());
+                foreach (string category in src[expac].Keys)
+                {
+                    dst[expac].Add(category, new List<QuestStruct>());
+                    foreach (QuestStruct quest in src[expac][category])
+                    {
+                        dst[expac][category].Add(quest);
+                    }
+                    // Sort quests by quest number when all quests have been added
+                    dst[expac][category].Sort((quest1, quest2) => quest1.number.CompareTo(quest2.number));
+                }
+            }
         }
 
         /// <summary>
@@ -493,7 +522,7 @@ namespace FFXIV_Quest_Tracker
             }
 
             /* DEBUG
-            System.Diagnostics.Debug.WriteLine("Saving at: " + _filePath); //*/
+            System.Diagnostics.Debug.WriteLine("Saving data at: " + _filePath); //*/
 
             // Generate List of lines to write from completedQuests
             List<string> lines = new List<string>();
@@ -517,6 +546,44 @@ namespace FFXIV_Quest_Tracker
 
             // Change dataChanged to false since data has just been saved
             dataChanged = false;
+        }
+
+        /// <summary>
+        /// Save contents of questDictionary to a txt file
+        /// </summary>
+        /// <param name="_filePath"></param>
+        private void SaveQuestList(string _filePath)
+        {
+            if (File.Exists(_filePath))
+            {
+                File.Delete(_filePath);
+            }
+
+            //* DEBUG
+            System.Diagnostics.Debug.WriteLine("Saving quest list at: " + _filePath); //*/
+
+            // Generate List of lines to write from quest list
+            List<string> lines = new List<string>();
+            foreach (string expac in questDictionary.Keys)
+            {
+                lines.Add("### " + expac + " ###");
+                foreach (string category in questDictionary[expac].Keys)
+                {
+                    lines.Add("=== " + category + " ===");
+                    foreach (QuestStruct quest in completedQuests[expac][category])
+                    {
+                        lines.Add(quest.ToString());
+                    }
+                }
+            }
+            // Add end of file line
+            lines.Add("### EOF ###");
+
+            // Write lines to file
+            File.WriteAllLines(_filePath, lines);
+
+            // Change questListChanged to false since data has just been saved
+            questListChanged = false;
         }
     }
 }

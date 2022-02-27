@@ -9,11 +9,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Authors>RazePhalanx</Authors>
     <AssemblyVersion>1.0</AssemblyVersion>
-    <ApplicationIcon>ffxiv_quest_icon_zyR_icon.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/razephalanx/FFXIV-Quest-Tracker</RepositoryUrl>
     <DebugType>portable</DebugType>
+    <ApplicationIcon>ffxiv_quest_icon_zyR_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

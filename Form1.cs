@@ -25,25 +25,66 @@ namespace FFXIV_Quest_Tracker
         }
 
         #region Vars
-        // Var for About text
-        private string aboutText =  "Created by RazePhalanx\n" + 
-                                    "Github: " + "https://github.com/razephalanx/FFXIV-Quest-Tracker";
         // Vars for preference storage
         private string[] rawPreferencesData = null;
+        /// <summary>
+        /// Dictionary of preferences data
+        /// </summary>
         private Dictionary<string, string> preferencesDictionary;
         // Vars for expac, category, save file, theme, and quest list
-        private string currentExpac, currentCategory, currentTheme, currentSave, currentQuestList;
+        /// <summary>
+        /// Currently selected expansion/main category
+        /// </summary>
+        private string currentExpac;
+        /// <summary>
+        /// Currently selected subcategory
+        /// </summary>
+        private string currentCategory;
+        /// <summary>
+        /// Currently selected theme (NOT YET IMPLEMENTED)
+        /// </summary>
+        private string currentTheme;
+        /// <summary>
+        /// Current quest data save file location
+        /// </summary>
+        private string currentSave;
+        /// <summary>
+        /// Current main quest list file location
+        /// </summary>
+        private string currentQuestList;
+        /// <summary>
+        /// One of a set of vars for temporarily storing changes to preferences without overwriting current values
+        /// </summary>
         private string selectedExpac, expacToSave, selectedTheme, selectedSave, selectedQuestList;
         // Default vars for expac, theme, save file, and quest list file
-        private string defaultExpac = "A Realm Reborn";
-        private string defaultTheme = "Light";
-        private string defaultSaveFileName = "FFXIVQT_data.txt";
-        private string defaultQuestListFileName = "FFXIVQT_questlist.txt";
-        // Var to store quests being displayed
+        private readonly string defaultExpac = "A Realm Reborn";
+        private readonly string defaultTheme = "Light";
+        private readonly string defaultSaveFileName = "FFXIVQT_data.txt";
+        private readonly string defaultQuestListFileName = "FFXIVQT_questlist.txt";
+        // Var to store quests and data being displayed
+        /// <summary>
+        /// Main Dictionary of quests (both complete and incomplete)
+        /// </summary>
         private Dictionary<string, Dictionary<string, List<QuestStruct>>> questDictionary;
+        /// <summary>
+        /// Dictionary of completed quests
+        /// </summary>
         private Dictionary<string, Dictionary<string, List<QuestStruct>>> completedQuests;
-        // Var to detect if completed quest list has changed since program has opened or since last save
+        /// <summary>
+        /// Dictionary of quests that is only updated after saving quest data.
+        /// Same as completedQuests on startup.
+        /// </summary>
+        private Dictionary<string, Dictionary<string, List<QuestStruct>>> rollbackQuests;
+        // Vars to detect if completed list or quest list has changed since program has opened or since last save
+        /// <summary>
+        /// Boolean to keep track of if completedQuests has changed
+        /// </summary>
         private bool dataChanged;
+        /// <summary>
+        /// Boolean to keep track of if questDictionary has changed.
+        /// </summary>
+        // Adding/removing quests to the quest list is currently not implemented.
+        private bool questListChanged;
         #endregion
 
         public FFXIVQuestTrackerForm()
@@ -55,6 +96,7 @@ namespace FFXIV_Quest_Tracker
 
             // Prepare program
             dataChanged = false;
+            questListChanged = false;
             MainStartup();
 
             // Sort quest table by ascending quest number by default
@@ -63,6 +105,11 @@ namespace FFXIV_Quest_Tracker
 
         #region Main tab
         // Change checklist in Main tab to match the selected expansion
+        /// <summary>
+        /// Store new selected expac/main category, select the first subcategory for that expac/main category, and reload table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxMainExpac_SelectionChangeCommitted(object sender, EventArgs e)
         {
             currentExpac = comboBoxMainExpac.Text;
@@ -70,7 +117,11 @@ namespace FFXIV_Quest_Tracker
             LoadMainData(currentExpac, currentCategory);
         }
 
-        // Store new selected category
+        /// <summary>
+        /// Store new selected subcategory and reload table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxMainCategory_SelectionChangeCommitted(object sender, EventArgs e)
         {
             currentCategory = comboBoxMainCategory.Text;
@@ -144,9 +195,8 @@ namespace FFXIV_Quest_Tracker
             temp.urlCode = dataGridViewMainQuests[5, e.RowIndex].Value.ToString().Substring(dataGridViewMainQuests[5, e.RowIndex].Value.ToString().LastIndexOf("/") + 1);
 
             // Check if completedQuests has the currently selected expansion and category already added
-            /* Kinda messy, but quest data .txt should already have all expansions and categories in order
-             * and the order in completedQuests doesn't really matter anyways (except for saving to a file)
-             */
+            // Kinda messy, but quest data .txt should already have all expansions and categories in order
+            // and the order in completedQuests doesn't really matter anyways (except for saving to a file)
             if (!completedQuests.ContainsKey(currentExpac))
             {
                 Dictionary<string, List<QuestStruct>> dic = new Dictionary<string, List<QuestStruct>>();
@@ -166,6 +216,7 @@ namespace FFXIV_Quest_Tracker
                 // Re-sort the List<QuestStruct> at completedQuests[currentExpac][currentCategory] by quest number
                 completedQuests[currentExpac][currentCategory].Sort((quest1, quest2) => quest1.number.CompareTo(quest2.number));
             }
+            // Remove quest marked incompleted from completedQuests
             else if ((bool)dataGridViewMainQuests[e.ColumnIndex, e.RowIndex].Value == false && completedQuests[currentExpac][currentCategory].Contains(temp))
             {
                 completedQuests[currentExpac][currentCategory].Remove(temp);
@@ -183,6 +234,8 @@ namespace FFXIV_Quest_Tracker
         private void buttonMainSaveDefault_Click(object sender, EventArgs e)
         {
             SaveQuestData(currentSave);
+            // Update rollbackQuests
+            CopyQuestDictionary(completedQuests, rollbackQuests);
         }
 
         /// <summary>
@@ -198,6 +251,35 @@ namespace FFXIV_Quest_Tracker
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 SaveQuestData(dlg.FileName);
+                // Update rollbackQuests
+                CopyQuestDictionary(completedQuests, rollbackQuests);
+            }
+        }
+
+        /// <summary>
+        /// Cancel saving changes of quest data, undo changes on table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCancelDataChanges_Click(object sender, EventArgs e)
+        {
+            // Check if any changes have been made to quest data
+            if (!dataChanged)
+            {
+                MessageBox.Show("No changes to revert.", "", MessageBoxButtons.OK, MessageBoxIcon.None);
+                return;
+            }
+
+            // Prompt user to cancel changes
+            DialogResult dialogResult = MessageBox.Show("Undo changes to checklist and revert to last save?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+                // Deep copy rollbackQuests into completedQuests
+                CopyQuestDictionary(rollbackQuests, completedQuests);
+                // Reload quest table
+                LoadMainData(currentExpac, currentCategory);
+                // Reset dataChanged to false
+                dataChanged = false;
             }
         }
         #endregion
@@ -302,21 +384,24 @@ namespace FFXIV_Quest_Tracker
         /// <param name="e"></param>
         private void OnApplicationExit(object sender, EventArgs e)
         {
-            // Do nothing if completed quest data was not changed
-            if (!dataChanged)
+            // Prompt user to save changes to quest list if they were not saved
+            if (questListChanged)
             {
-                return;
+                DialogResult dgResult = MessageBox.Show("Changes to quest list have not been saved.\nSave now?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dgResult == DialogResult.Yes)
+                {
+                    SaveQuestList(currentQuestList);
+                }
             }
 
-            // Prompt user to save quest data to file if quest data was changed
-            DialogResult dialogResult = MessageBox.Show("Quest data has not been saved.\nSave data now?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dialogResult == DialogResult.Yes)
+            // Prompt user to save completed quest data to file if completed quest data was changed
+            if (dataChanged)
             {
-                SaveQuestData(currentSave);
-            }
-            else
-            {
-                return;
+                DialogResult dialogResult = MessageBox.Show("Quest data has not been saved.\nSave data now?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    SaveQuestData(currentSave);
+                }
             }
         }
         #endregion
